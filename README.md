@@ -19,4 +19,5 @@ then send a pull request to get their work added to this repository.  Participan
 with their proper name or their github account identity (using underscores as separators instead of spaces).
 
 
-
+###Sponsor###
+The food (and gifts) sponsor for this meeting is [Rackspace](http://www.rackspace.com/).
