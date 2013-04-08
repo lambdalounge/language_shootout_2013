@@ -16,7 +16,7 @@ The four challenges are:
 ###Sharing your work###
 Participants are encouraged to pick one of the challenge problems, fork this git repo and add their implementation, 
 then send a pull request to get their work added to this repository.  Participants should add their work under a directory
-with their proper name or their github account identity (using underscores as separators instead of spaces).
+with their proper name (using underscores as separators instead of spaces) or their github account identity.
 
 
 ###Sponsor###
