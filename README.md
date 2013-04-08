@@ -1,9 +1,9 @@
 ##2013 Language Shootout##
 ======================
 
-On June 6, we will hold the second Lambda Lounge Language Shootout. Participants will be given roughly 
-10 minutes to present their solution to one of 4 possible programming challenges.  Implementations can be in 
-any language or tech stack.  
+On June 6, we will hold the second Lambda Lounge Language Shootout. On the night of the meeting, participants will be 
+given roughly 10 minutes to present any novel findings discovered in their solution to one of 4 possible programming
+challenges.  Implementations can be in any language or tech stack.
 
 ###The Challenges###
 The four challenges are:
