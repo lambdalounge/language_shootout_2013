@@ -38,7 +38,7 @@ public class CountingTask extends RecursiveTask<Integer>{
         //G => 01000111
         //T => 01010100
         
-        //             T             GT           CG
-        return ((b&0x10)<<16)+((b&0x04)<<8)+((b&0x02)>>>1);
+        //      accumulate T     accumulate G or T   accumulate C or G
+        return ((b&0x10)<<16)   + ((b&0x04)<<8)     + ((b&0x02)>>>1);
     }
 }
