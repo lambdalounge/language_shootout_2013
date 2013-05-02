@@ -1,2 +1,7 @@
-*.class
+# Eclipse's metadata
+.classpath
+.project
+.settings
+
+# Compiled artefacts
 target/
