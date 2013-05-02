@@ -1,55 +1,111 @@
 package kata;
 
 import java.nio.CharBuffer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import kata.stats.Statistics;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 public class StringCounterTest {
 
+    private static final int MAX_REPETITIONS = 10;
+    private static final int MAX_CONCURRENCY = 8;
     private final String shortSample = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
 
     @Test
-    public void testSample() throws Exception {
-        Screener counter = new StringCounter();
+    public void testBadSample() throws Exception {
+        Screener counter = new Screener();
+        try {
+            counter.process(CharBuffer.wrap("Q"));
+            fail("Expected to fail");
+        } catch (IllegalArgumentException ex) {
+            ;
+        }
+
+        Assert.assertArrayEquals(new long[] {
+                0, 0, 0, 0
+        }, counter.counts());
+    }
+
+    @Test
+    public void testSingleSample() throws Exception {
+        Screener counter = new Screener();
         counter.process(createShortSample());
         Assert.assertArrayEquals(new long[] {
                 20, 12, 17, 21
         }, counter.counts());
     }
 
-    @Test
-    public void testManyLongSamplesSequential() throws Exception {
-        Screener counter = new StringCounter();
-        CharBuffer wraped = createLongSample();
-        for (long n = 1; n <= 100000000; n *= 10) {
-            for (long i = 0; i < n; i++) {
-                counter.process((CharBuffer) wraped.rewind());
-            }
+//    @Test
+//    public void testSingleSampleWithStrategyNoRepetition() throws Exception {
+//        Strategy strategy = new SequentialProcessing();
+//        Statistics counter = strategy.process(1, createShortSample());
+//        Assert.assertArrayEquals(new long[] {
+//                20, 12, 17, 21
+//        }, counter.counts());
+//    }
+//
+//    @Test
+//    public void testSingleSampleWithStrategyTwice() throws Exception {
+//        Strategy strategy = new SequentialProcessing();
+//        Statistics counter = strategy.process(2, createShortSample());
+//        Assert.assertArrayEquals(new long[] {
+//                40, 24, 34, 42
+//        }, counter.counts());
+//    }
 
-            Statistics stats = counter.stats();
-            System.out.printf("%nlong(%d) %.2s, total: %.2fms", n, stats, stats.total() / 1000000);
+    @Test
+    public void testManyLongSamplesWithParallelStrategy() throws Exception {
+        CharBuffer wraped = createLongSample();
+        int length = wraped.remaining();
+        ExecutorService pool = Executors.newFixedThreadPool(MAX_CONCURRENCY);
+        Strategy strategy = new ParallelProcessing(MAX_CONCURRENCY, pool);
+        for (long repetitions = 1; repetitions <= MAX_REPETITIONS; repetitions *= 10) {
+            Statistics stats = strategy.process(repetitions, wraped);
+            System.out.printf("%npar long(%d, %d) %.2s, total: %.2fms", length, repetitions, stats, stats.total() / 1000000);
         }
-        Assert.assertArrayEquals(new long[] {
-                2222222220L, 1333333332L, 188870000, 233310000
-        }, counter.counts());
+        pool.shutdown();
     }
 
     @Test
-    public void testManyShortSamples() throws Exception {
-        Screener counter = new StringCounter();
+    public void testShortSamplesWithParallelStrategy() throws Exception {
         CharBuffer wraped = createShortSample();
-        for (long n = 1; n <= 100000000; n *= 10) {
-            for (long i = 0; i < n; i++) {
-                counter.process((CharBuffer) wraped.rewind());
-            }
-
-            Statistics stats = counter.stats();
-            System.out.printf("%nshort(%d) %.2s, total: %.2fms", n, stats, stats.total() / 1000000);
+        int length = wraped.remaining();
+        ExecutorService pool = Executors.newFixedThreadPool(MAX_CONCURRENCY);
+        Strategy strategy = new ParallelProcessing(MAX_CONCURRENCY, pool);
+        for (long repetitions = 1; repetitions <= MAX_REPETITIONS; repetitions *= 10) {
+            Statistics stats = strategy.process(repetitions, wraped);
+            System.out.printf("%npar short(%d, %d) %.2s, total: %.2fms", length, repetitions, stats, stats.total() / 1000000);
         }
-        Assert.assertArrayEquals(new long[] {
-                2222222220L, 1333333332L, 188870000, 233310000
-        }, counter.counts());
+        pool.shutdown();
+    }
+
+
+    @Test
+    public void testLongSamplesWithSequentialStrategy() throws Exception {
+        CharBuffer sequence = createLongSample();
+        int length = sequence.remaining();
+        Strategy strategy = new SequentialProcessing();
+        for (long n = 1; n <= MAX_REPETITIONS; n *= 10) {
+            Statistics stats = strategy.process(n, sequence);
+            System.out.printf("%nseq long(%d, %d) %.2s, total: %.2fms", length, n, stats, stats.total() / 1000000);
+        }
+    }
+
+    @Test
+    public void testShortSamplesWithSequentialStrategy() throws Exception {
+        CharBuffer sequence = createShortSample();
+        int length = sequence.remaining();
+        Strategy strategy = new SequentialProcessing();
+        for (long n = 1; n <= MAX_REPETITIONS; n *= 10) {
+            Statistics stats = strategy.process(n, sequence);
+            System.out.printf("%nseq short(%d, %d) %.2s, total: %.2fms", length, n, stats, stats.total() / 1000000);
+        }
     }
 
     public CharBuffer createShortSample() {

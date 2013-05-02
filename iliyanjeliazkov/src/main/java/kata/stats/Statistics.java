@@ -1,4 +1,4 @@
-package kata;
+package kata.stats;
 
 import java.util.Formattable;
 import java.util.Formatter;
@@ -177,8 +177,8 @@ public class Statistics implements Formattable {
     }
 
     StringBuilder appendDouble(StringBuilder fmt,
-                             int width,
-                             int precision) {
+                               int width,
+                               int precision) {
         fmt.append("%");
         if (width > 0) {
             fmt.append(width);
@@ -190,6 +190,28 @@ public class Statistics implements Formattable {
         fmt.append("f");
         fmt.append(units);
         return fmt;
+    }
+
+    public static Statistics combine(Statistics arg1,
+                                     Statistics arg2) {
+        if (arg1 == null) {
+            return arg2;
+        }
+
+        if (arg2 == null) {
+            return arg1;
+        }
+
+        Statistics stats = new Statistics(Math.max(arg1.tick, arg2.tick), arg1.units, arg1.scale);
+        stats.maximum = Math.max(arg1.maximum, arg2.maximum);
+        stats.minimum = Math.min(arg1.minimum, arg2.minimum);
+        stats.total = arg1.total + arg2.total;
+        stats.count = arg1.count + arg2.count;
+
+        stats.mean2 = (stats.count - 1) * (arg1.variance() + arg2.variance());
+        stats.mean = Math.sqrt(stats.mean2);
+
+        return stats;
     }
 
 }
