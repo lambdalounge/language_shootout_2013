@@ -8,4 +8,6 @@ public interface Screener {
 
     Statistics stats();
 
+    long[] counts();
+
 }
