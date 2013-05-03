@@ -1,3 +1,7 @@
+(require :asdf)
+(require :sigma)
+(sigma:use-all-sigma)
+
 ;;; Counting DNA Nucleotides
 ;;; http://rosalind.info/problems/dna/
 ;;;
@@ -21,23 +25,16 @@
 ;;;
 ;;; 20 12 17 21
 
-(defun inchash (key hash)
-  (if (null (gethash key hash))
-      (setf (gethash key hash) 1)
-      (incf (gethash key hash))))
-
 (defun count-dna (input)
   (assert (stringp input))
   (let ((counts (make-hash-table)))
-    (map 'list
-	 (lambda (letter)
-	   (inchash letter counts))
-	 input)
-    (mapcar (lambda (letter)
-	      (gethash letter counts))
-	    (map 'list 'identity "ACGT"))))
+    (map 'list (rcurry 'inchash counts) input)
+    (string-join (mapcar 'stringify
+			 (mapcar (rcurry 'gethash counts)
+				 (map 'list 'identity "ACGT")))
+		 " ")))
 
 (assert
  (equalp
   (count-dna "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC")
-  '(20 12 17 21)))
+  "20 12 17 21"))
