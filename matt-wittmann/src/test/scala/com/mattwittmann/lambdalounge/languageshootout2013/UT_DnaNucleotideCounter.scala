@@ -7,6 +7,7 @@ import org.scalatest.FunSuite
  */
 class UT_DnaNucleotideCounter extends FunSuite {
   test("Sample per http://rosalind.info/problems/dna/") {
-    assert("20 12 17 21" == DnaNucleotideCounter.count("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"))
+    val implementations = List(DnaNucleotideCounterImmutableMapFold, DnaNucleotideCounterMutableMapForEach, DnaNucleotideCounterImperative, DnaNucleotideCounterRecursive, DnaNucleotideCounterRecursiveNoImplicit)
+    implementations.foreach {it => assert("20 12 17 21" == it.mkString("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"))}
   }
 }
