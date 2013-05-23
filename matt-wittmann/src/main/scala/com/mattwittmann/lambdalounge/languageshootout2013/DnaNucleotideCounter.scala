@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
  * Trait defining the interface of a DNA nucleotide counter.
  */
-trait DnaNucleotideCounter {
+trait DnaNucleotideCounter extends RosalindSolution {
   /**
    * Returns a String with the count of DNA nucleotides (A, C, G, T).
    *

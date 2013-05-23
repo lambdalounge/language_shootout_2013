@@ -6,7 +6,7 @@ class UT_RabbitRecurrence extends FunSuite {
   type RabbitRecurrenceAssertion = Tuple2[String, String]
 
   def testRabbitRecurrence(assertions: List[RabbitRecurrenceAssertion], implementations: RabbitRecurrence*) {
-    implementations foreach { i => assertions foreach {a => assert(a._1 == i.countRabbitPairs(a._2))} }
+    implementations foreach { i => assertions foreach {a => assert(a._1 == i.mkString(a._2))} }
   }
 
   test("Invasion of the zeroes") {

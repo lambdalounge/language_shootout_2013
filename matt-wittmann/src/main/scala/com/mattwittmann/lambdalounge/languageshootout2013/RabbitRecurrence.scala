@@ -5,14 +5,14 @@ package com.mattwittmann.lambdalounge.languageshootout2013
  *
  * @see [[http://rosalind.info/problems/fib/]]
  */
-trait RabbitRecurrence {
+trait RabbitRecurrence extends RosalindSolution {
   /**
    * Counts the number of rabbits.
    *
    * @param input Of the form "months litterSize"
    * @return The total number of rabbits
    */
-  def countRabbitPairs(input: String): String = {
+  def mkString(input: String): String = {
     val split = input split " "
     if (split.length == 2)
       countRabbitPairs(split(0).toInt, split(1).toInt) toString
