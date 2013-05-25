@@ -10,9 +10,8 @@ package com.mattwittmann.lambdalounge.languageshootout2013
 trait MendelsFirstLaw extends RosalindSolution {
   def mkString(input: String): String = {
     val split = input split " "
-    if (split.length == 3) {
+    if (split.length == 3)
       probabilityDominant(split(0).toInt, split(1).toInt, split(2).toInt) toString
-    }
     else
       ""
   }
