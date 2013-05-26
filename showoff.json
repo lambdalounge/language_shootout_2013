@@ -1,0 +1,9 @@
+{
+  "name": "Language Shootout",
+  "description": "Language Shootout Lambda Lounge June 2013 http://lambdalounge.org/",
+  "sections": [
+    {"section":"intro"}, 
+    {"section":"scottbale"},
+    {"section":"wrapup"}
+  ]
+}

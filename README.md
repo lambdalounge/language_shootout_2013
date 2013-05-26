@@ -18,6 +18,14 @@ Participants are encouraged to pick one of the challenge problems, fork this git
 then send a pull request to get their work added to this repository.  Participants should add their work under a directory
 with their proper name (using underscores as separators instead of spaces) or their github account identity.
 
+###Slides###
+This repository includes a
+[showoff](https://github.com/schacon/showoff) presentation. If you
+like, add some slides for your talk: (1) create one or more
+[markdown](https://github.com/schacon/showoff#slide-format) 
+files in your directory, (2) edit the showoff.json file and add a
+section for your directory. It's not necessary to have showoff
+installed.
 
 ###Sponsor###
 The food (and gifts) sponsor for this meeting is [Rackspace](http://www.rackspace.com/).
