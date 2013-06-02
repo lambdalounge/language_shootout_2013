@@ -4,7 +4,7 @@ end
 
 function append_to(func, collector)
   for val in func do
-    collector[#collector + 1] = val
+    table.insert(collector, val)
   end
 end
 

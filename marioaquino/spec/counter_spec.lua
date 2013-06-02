@@ -19,11 +19,16 @@ describe('nucleotide counter', function()
 end)
 
 describe('a string splitter', function()
-  it("splits a string into a table of individual characters", function()
+  it('splits a string into a table of individual characters', function()
     assert.are.same('a', string_iterator('a')())
   end)
 end)
 
 describe('a value accumulator', function()
-
+  it('inserts a value at the end of the table', function()
+    local val = {'a', 'b', 'c'}
+    local collector = {}
+    append_to(function() return table.remove(val, 1) end, collector)
+    assert.are.same({'a', 'b', 'c'}, collector)
+  end)
 end)
