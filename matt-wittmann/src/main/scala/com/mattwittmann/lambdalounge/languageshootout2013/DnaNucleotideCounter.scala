@@ -1,6 +1,8 @@
 package com.mattwittmann.lambdalounge.languageshootout2013
 
 import scala.collection.mutable.ArrayBuffer
+import scala.collection.immutable.WrappedString
+import scala.annotation.tailrec
 
 /**
  * Trait defining the interface of a DNA nucleotide counter.
@@ -37,7 +39,7 @@ object DnaNucleotideCounterImmutableMapFold extends DnaNucleotideCounter {
   def getName() = "Immutable Map Counter"
 
   def asList(input: String) = {
-    val map = input.foldLeft(Map[Char, Int]()) {(map, i) => map + ((i, (map.getOrElse(i, 0) + 1)))}
+    val map = input./:(Map[Char, Int]()) {(map, i) => map + ((i, (map.getOrElse(i, 0) + 1)))}
     List('A', 'C', 'G', 'T').map {map.getOrElse(_, 0)}
   }
 }
@@ -88,80 +90,23 @@ object DnaNucleotideCounterRecursive extends DnaNucleotideCounter {
 
   type DnaNucleotideCount = Tuple4[Int, Int, Int, Int]
 
-  /**
-   * Provides a little syntactic sugar for dealing with this tuple DnaNucleotideCount.
-   *
-   * @param count The tuple of DNA nucleotides counted so far
-   * @return A wrapper object of the type DnaNucleotideCount
-   */
-  implicit def dnaNucleotideCountWrapper(count: DnaNucleotideCount) = new {
-    /**
-     * Adds two DnaNucleotideCount tuples.
-     *
-     * @param b The DnaNucleotideCount tuple to be added to count
-     * @return A new DnaNucleotideCount the elements of the same arity added 
-     */
-    def +(b: DnaNucleotideCount): DnaNucleotideCount = {
-      val (aa, ac, ag, at) = count
-      val (ba, bc, bg, bt) = b
-      (aa + ba, ac + bc, ag + bg, at + bt)
-    }
-  }
-
   def asList(input: String) = {
-    def count(in: Any, counted: DnaNucleotideCount): DnaNucleotideCount = in match {
-      case "" => counted
-      case tail: String => count(tail.head, counted) + count(tail.tail, counted)
-      case head: Char => {
-        val (a, c, g, t) = counted
-        head match {
-          case 'A' => (a + 1, c, g, t)
-          case 'C' => (a, c + 1, g, t)
-          case 'G' => (a, c, g + 1, t)
-          case 'T' => (a, c, g, t + 1)
-          case _ => throw new RuntimeException("Unexpected value: " + head)
+    def headMatch(head: Char, counted: DnaNucleotideCount) = {
+      val (a, c, g, t) = counted
+      head match {
+        case 'A' => (a + 1, c, g, t)
+        case 'C' => (a, c + 1, g, t)
+        case 'G' => (a, c, g + 1, t)
+        case 'T' => (a, c, g, t + 1)
+        case _ => throw new RuntimeException("Unexpected value: " + head)
         }
-      }
-      case _ => throw new RuntimeException("Unexpected value: " + in)
     }
-    val (a, c, g, t) = count(input, (0, 0, 0, 0))
-    List(a, c, g, t)
-  }
-}
-
-/**
- * This implementation of [[com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounter]]
- * uses a functional style featuring recursion.
- *
- * Unlike [[com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterRecursive]],
- * this implementation forgoes the implicit type conversion that adds some overhead.
- */
-object DnaNucleotideCounterRecursiveNoImplicit extends DnaNucleotideCounter {
-  def getName() = "Recursive Counter Without Implicit Conversion"
-
-  type DnaNucleotideCount = Tuple4[Int, Int, Int, Int]
-
-  def asList(input: String) = {
-    def count(in: Any, counted: DnaNucleotideCount): DnaNucleotideCount = in match {
-      case "" => counted
-      case tail: String => {
-        val (aa, ac, ag, at) = count(tail.head, counted)
-        val (ba, bc, bg, bt) = count(tail.tail, counted)
-        (aa + ba, ac + bc, ag + bg, at + bt)
-      }
-      case head: Char => {
-        val (a, c, g, t) = counted
-        head match {
-          case 'A' => (a + 1, c, g, t)
-          case 'C' => (a, c + 1, g, t)
-          case 'G' => (a, c, g + 1, t)
-          case 'T' => (a, c, g, t + 1)
-          case _ => throw new RuntimeException("Unexpected value: " + head)
-        }
-      }
-      case _ => throw new RuntimeException("Unexpected value: " + in)
+    @tailrec
+    def count(in: List[Char], counted: DnaNucleotideCount): DnaNucleotideCount = in match {
+      case Nil => counted
+      case head :: tail => count(tail, headMatch(head, counted))
     }
-    val (a, c, g, t) = count(input, (0, 0, 0, 0))
+    val (a, c, g, t) = count(input.toList, (0, 0, 0, 0))
     List(a, c, g, t)
   }
 }
@@ -202,7 +147,7 @@ class ParallelDnaNucleotideCounter(dnaNucleotideCounter: DnaNucleotideCounter, s
 object DnaNucleotideCounterMain extends App {
   val times = 20
   val implementations = List(DnaNucleotideCounterImmutableMapFold, DnaNucleotideCounterMutableMapForEach,
-      DnaNucleotideCounterImperative, DnaNucleotideCounterRecursive, DnaNucleotideCounterRecursiveNoImplicit,
+      DnaNucleotideCounterImperative, DnaNucleotideCounterRecursive,
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 10),
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 20),
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 70),
