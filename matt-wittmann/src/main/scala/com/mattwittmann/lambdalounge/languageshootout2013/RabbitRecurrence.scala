@@ -1,5 +1,7 @@
 package com.mattwittmann.lambdalounge.languageshootout2013
 
+import scala.annotation.tailrec
+
 /**
  * Rabbits and Recurrence Relations is a problem of Fibonacci sequences.
  *
@@ -36,6 +38,7 @@ trait RabbitRecurrence extends RosalindSolution {
  */
 object ForwardRabbitRecurrence extends RabbitRecurrence {
   def countRabbitPairs(months: Int, litterSize: Int): Int = {
+    @tailrec
     def count(currentMonth: Int, months: Int, litterSize: Int, lastYoungPairs: Int, lastMaturePairs: Int, youngPairs: Int, maturePairs: Int): Int = {
       currentMonth match {
         case x if x == months => lastYoungPairs + lastMaturePairs
@@ -56,7 +59,7 @@ object ForwardRabbitRecurrence extends RabbitRecurrence {
 /**
  * Implements the RabbitRecurrence trait using a recursive algorithm, going down from the last month.
  *
- * FIXME This does not work for months > 1.
+ * FIXME This does not work for litterSize > 1.
  */
 object BackwardRabbitRecurrence extends RabbitRecurrence {
   def countRabbitPairs(months: Int, litterSize: Int): Int = {
