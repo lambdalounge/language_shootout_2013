@@ -1,7 +1,6 @@
 package com.mattwittmann.lambdalounge.languageshootout2013
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.immutable.WrappedString
 import scala.annotation.tailrec
 
 /**
