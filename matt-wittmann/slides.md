@@ -16,8 +16,8 @@
 * Scala traits are like Java interfaces but can mix in executable code (coming in Java 8).
 * All solutions implemented this trait:
 
-	package com.mattwittmann.lambdalounge.languageshootout2013
-	trait RosalindSolution { def mkString(input: String): String }
+		package com.mattwittmann.lambdalounge.languageshootout2013
+		trait RosalindSolution { def mkString(input: String): String }
 * A child trait was defined for each problem.
 
 <!SLIDE bullets transition=scrollUp>
