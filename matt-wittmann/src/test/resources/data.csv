@@ -3,10 +3,10 @@ com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 0 0
 com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 0 100,0.0
 com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,100 0 0,1.0
 com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 100 0,0.75
-com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 0 50,0.7525252525252525
-com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 50 50,0.43813131313131315
-com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 50 0,0.9381313131313131
-com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,2 2 2,0.7833333333333333
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 0 50,745.0/990.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 50 50,4337.5/9900.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 50 0,9287.5/9900.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,2 2 2,47.0/60.0
 com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterImmutableMapFold$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21
 com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterMutableMapForEach$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21
 com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterImperative$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21

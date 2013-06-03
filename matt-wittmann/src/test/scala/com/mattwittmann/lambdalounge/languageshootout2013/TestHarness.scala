@@ -10,10 +10,12 @@ import org.scalatest.FunSuite
  *
  * The format of data.csv is:
  * Class,Input,Expected
+ *
+ * @param times The number of times to run each test case
  */
-class TestHarness extends FunSuite {
-  /** The number of times to run each test case. */
-  val times = 200
+class TestHarness(val times: Int) extends FunSuite {
+  /** Defaulting to run 200 times. sbt needs an explicit zero-argument constructor for a ScalaTest Suite. */
+  def this() = this(200)
 
   /**
    * Gets an instance of a Scala class/singleton object by its fully qualified name. Scala reflection
@@ -46,6 +48,22 @@ class TestHarness extends FunSuite {
     else
       (cached += ((fullName, getInstanceByReflection(fullName))))(fullName)
 
+  /**
+   * Fixing expected if it contains, for example, a fraction.
+   *
+   * @param expected The original expected string from the CSV file
+   * @return A fixed-up version of expected
+   */
+  def fixExpected(expected: String): String =
+      if (expected.contains("/")) {
+        val split = expected.split("/")
+        val numerator = java.lang.Double.parseDouble(split(0))
+        val denominator = java.lang.Double.parseDouble(split(1))
+        java.lang.Double.toString(numerator / denominator)
+      }
+      else
+        expected
+
   val cached = Map[String, RosalindSolution]()
   val mirror = runtimeMirror(getClass.getClassLoader)
   Source.fromInputStream(getClass.getResourceAsStream("/data.csv")).getLines.foreach { line =>
@@ -54,7 +72,7 @@ class TestHarness extends FunSuite {
       test(line) {
         val instance = getInstance(fields(0))
         val input = fields(1)
-        val expected = fields(2)
+        val expected = fixExpected(fields(2))
         val output = instance.mkString(input)
         val start = System.currentTimeMillis()
         for (i <- 0 to times) {
