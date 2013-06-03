@@ -1,0 +1,22 @@
+Solutions to http://rosalind.info/problems/fib/:
+
+  F_1 = 1
+  F_2 = 1
+  F_n = F_(n-1) + k F_(n - 2), n = 3, 4, 5, ...
+
+Find F_n for n <=40 and k <= 5.
+
+Three solutions are provided in the Racket programming language:
+
+  naive.rkt (exponential time)
+  iterative.rkt (linear time)
+  binet.rkt (constant time)
+
+The constant time Binet solution depends on the closed form
+mathematical solution of the recurrance equation:
+
+  F_n = (beta^n - alpha^n) / (beta - alpha)
+
+where alpha and beta are the roots of the quadratic equation
+
+  x^2 - x - k = 0.
