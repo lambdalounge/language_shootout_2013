@@ -142,9 +142,14 @@ class ParallelDnaNucleotideCounter(dnaNucleotideCounter: DnaNucleotideCounter, s
 
 /**
  * Entry point of the application.
+ *
+ * The first argument should be the number of times to run each implementation, defaulting to 20.
+ * The second argument should be the input, defaulting to
+ * AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC.
  */
 object DnaNucleotideCounterMain extends App {
-  val times = 20
+  val times = if (args.length > 0) Integer.parseInt(args(0)) else 20
+  val input = if (args.length > 1) args(1) else "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"
   val implementations = List(DnaNucleotideCounterImmutableMapFold, DnaNucleotideCounterMutableMapForEach,
       DnaNucleotideCounterImperative, DnaNucleotideCounterRecursive,
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 10),
@@ -152,7 +157,6 @@ object DnaNucleotideCounterMain extends App {
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 70),
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 71),
       new ParallelDnaNucleotideCounter(DnaNucleotideCounterImperative, 72))
-  val input = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"
   for (implementation <- implementations) {
     val start = System.currentTimeMillis()
     for (i <- 0 to 20) {
