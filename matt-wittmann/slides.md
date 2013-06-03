@@ -15,6 +15,7 @@
 
 * Scala traits are like Java interfaces but can mix in executable code (coming in Java 8).
 * All solutions implemented this trait:
+
 	package com.mattwittmann.lambdalounge.languageshootout2013
 	trait RosalindSolution { def mkString(input: String): String }
 * A child trait was defined for each problem.
@@ -26,6 +27,7 @@
 * Simple math.
 
 <!SLIDE code transition=scrollUp>
+
 	object DefaultMendelsFirstLaw extends MendelsFirstLaw {
 	  def probabilityDominant(dominant: Int, heterozygous: Int, recessive: Int): Double = {
 	    val k = dominant.toDouble
@@ -61,6 +63,7 @@
   starting from the first month and counting to the last.
 
 <!SLIDE code transition=scrollUp>
+
 	def countRabbitPairs(months: Int, litterSize: Int): Int = {
 	  @tailrec
 	  def count(currentMonth: Int, months: Int, litterSize: Int, lastYoungPairs: Int, lastMaturePairs: Int, youngPairs: Int, maturePairs: Int): Int = {
