@@ -121,22 +121,12 @@ class ParallelDnaNucleotideCounter(dnaNucleotideCounter: DnaNucleotideCounter, s
   def getName() = s"Parallel ($splitAt) ${dnaNucleotideCounter.getName}"
 
   def asList(input: String) = {
-    val substrings = new ArrayBuffer[String]
-    for (i <- 0 to input.length() by splitAt) {
+    val substrings = (0 to input.length() by splitAt).par.map { i =>
       val maxBoundary = i + splitAt
       val end = if (maxBoundary < input.length()) maxBoundary else input.length()
-      substrings += input.substring(i, end)
+      input.substring(i, end)
     }
-    // TODO Using par slows down the calculations considerably at least for small data sets
-    val result = substrings.toList.map {dnaNucleotideCounter.asList(_)} reduce {(a, b) =>
-      val reduced = new ArrayBuffer[Int]
-      for (j <- 0 until a.length) {
-        val sum = if (j < b.length) a(j) + b(j) else a(j)
-        reduced += sum
-      }
-      reduced.toList
-    }
-    result
+    substrings.map {dnaNucleotideCounter.asList(_)} reduce {(a, b) => (a, b).zipped map { _ + _ } toList}
   }
 }
 
