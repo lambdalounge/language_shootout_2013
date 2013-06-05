@@ -18,6 +18,10 @@ function string_iterator(str)
   return string.gmatch(str, "%a")
 end
 
+function length(input)
+  return #input
+end
+
 function map(data, func)
   local collector = {}
   if type(data) == 'table' then

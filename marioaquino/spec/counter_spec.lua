@@ -13,7 +13,7 @@ describe('nucleotide counter', function()
     assert.are.equal('0 0 0 0', count_nucleotides('       '))
   end)
 
-  it('accepts non-string parameters', function()
+  it('does not count non-string parameters', function()
     assert.are.equal('0 0 0 0', count_nucleotides(123456789))
   end)
 end)
@@ -37,6 +37,16 @@ describe('a map function', function()
   it('applies a function to each item in a structure and returns a structure with the results', function()
     local data = {'a', 'b', 'c'}
     assert.are.same({'A', 'B', 'C'}, map(data, string.upper))
+  end)
+end)
+
+describe('a length function', function()
+  it('counts the length of a string', function()
+    assert.are.equal(3, length('abc'))
+  end)
+
+  it('counts the length of a table', function()
+    assert.are.equal(4, length({1, 2, 3, 4}))
   end)
 end)
 
