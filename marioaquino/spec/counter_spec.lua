@@ -40,6 +40,14 @@ describe('a map function', function()
   end)
 end)
 
+describe('a reduce function', function()
+  it('accumulates the result of all function calls over a data structure', function()
+    assert.are.equal(10, reduce({1,2,3,4}, 0, function(memo, val) return memo+val end))
+
+    assert.are.equal(24, reduce({1,2,3,4}, 1, function(memo, val) return memo*val end))
+  end)
+end)
+
 describe('a length function', function()
   it('counts the length of a string', function()
     assert.are.equal(3, length('abc'))

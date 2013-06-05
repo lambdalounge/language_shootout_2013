@@ -31,3 +31,10 @@ function map(data, func)
   end
   return collector
 end
+
+function reduce(data, memo, func)
+  for i,val in ipairs(data) do
+    memo = func(memo, val)
+  end
+  return memo
+end
