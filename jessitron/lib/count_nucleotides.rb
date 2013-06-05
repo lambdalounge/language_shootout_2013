@@ -1,13 +1,14 @@
 require 'aqueductron'
 
-input = "AATTGGGGAGCAN"
 
+class CountNucleotides
+  def initialize
 # create a piece of a duct that counts what goes in
 #   --\
 #***   count
 #   --/
-count_letter = ->(unused) { Aqueductron::Duct.new.count }
-identity = ->(e) { e }
+    count_letter = ->(unused) { Aqueductron::Duct.new.count }
+    identity = ->(e) { e }
 
 # a dynamically-splitting pipeline that categorizes
 #                 < ***
@@ -15,11 +16,29 @@ identity = ->(e) { e }
 # >   identity <  - < ***
 # ---            \
 #                 < ***
-pipe = Aqueductron::Duct.new.partition(identity, count_letter)
+    @duct = Aqueductron::Duct.new.partition(identity, count_letter)
 
-# send the letters through.
-result = duct.flow(input.chars)
+  end
 
-bases = result.keys
-puts bases.join(" ")
-puts bases.map { |atgc| result.value(atgc)}.join(" ")
+  def count(sequence)
+    # send the letters through.
+    result = @duct.flow(sequence.chars)
+    result_to_hash(result)
+  end
+
+  # for demonstration purposes
+  def for_example
+    input = "GACCACTGGTCA"
+    puts "input is #{input}"
+    result = @duct.flow(input.chars)
+    bases = result.keys
+    puts bases.join(" ")
+    puts bases.map { |atgc| result.value(atgc)}.join(" ")
+  end
+
+  private
+    def result_to_hash(result)
+      keys_to_values = result.keys.map { |k| [k, result.value(k)]}
+      Hash[*keys_to_values.flatten]
+    end
+end
