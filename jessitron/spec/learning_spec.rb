@@ -1,18 +1,5 @@
 require_relative '../lib/learning'
 
-describe Fibonacci do
-  subject { Object.new.extend(Fibonacci) }
-
-  describe 'the input' do
-    it 'should give me the stuff' do
-      subject.look_at_this([1,2,3]).take(3).force.should == [1,2,3]
-    end
-
-    it 'should give me unknown after the stuff' do
-      subject.look_at_this([]).take(3).force.should == [:unknown,:unknown,:unknown]
-    end
-  end
-end
 describe 'the learning of ordinary fib' do
   subject { Object.new.extend(Fibonacci).rabbits([1,1,2],n) }
 
@@ -72,3 +59,16 @@ describe 'the learning of k is approximately 3' do
   end
 end
 
+describe Fibonacci do
+  subject { Object.new.extend(Fibonacci) }
+
+  describe 'the input' do
+    it 'should give me the stuff' do
+      subject.look_at_this([1,2,3]).take(3).force.should == [1,2,3]
+    end
+
+    it 'should give me unknown after the stuff' do
+      subject.look_at_this([]).take(3).force.should == [:unknown,:unknown,:unknown]
+    end
+  end
+end
