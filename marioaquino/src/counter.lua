@@ -18,6 +18,10 @@ function string_iterator(str)
   return string.gmatch(str, "%a")
 end
 
+function trim(str)
+  return str:match "^%s*(.-)%s*$"
+end
+
 function length(input)
   return #input
 end

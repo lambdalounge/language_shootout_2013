@@ -18,9 +18,15 @@ describe('nucleotide counter', function()
   end)
 end)
 
-describe('a string splitter', function()
+describe('a string iterator', function()
   it('splits a string into a table of individual characters', function()
     assert.are.same('a', string_iterator('abc')())
+  end)
+end)
+
+describe('a string trimmer', function()
+  it('removes whitespace on either side of a string', function()
+    assert.are.same('a b c', trim(' a b c  '))
   end)
 end)
 
