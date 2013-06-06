@@ -9,10 +9,11 @@
         s (apply concat (repeat 100000 base))
         v (vec s)]
 
+    (System/gc)
     (println "testing sequential version")
     (crit/bench (dna-count v))
 
     (dotimes [g 3]
-      (binding [*GRANULARITY* (* 8192 (apply * (repeat g 2)))]
+      (binding [*GRANULARITY* (* 4096 (apply * (repeat g 2)))]
         (println "\ntesting reducer version, granularity= " *GRANULARITY*)
         (crit/bench (dna-count-par v))))))
