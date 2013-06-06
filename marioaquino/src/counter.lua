@@ -26,6 +26,15 @@ function length(input)
   return #input
 end
 
+function substring_counter(str, substring)
+  return length(prune(str, substring))
+end
+
+function prune(str, keep)
+  val = string.gsub(str, "[^"..keep.."]", "")
+  return val
+end
+
 function map(data, func)
   local collector = {}
   if type(data) == 'table' then

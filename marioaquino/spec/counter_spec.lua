@@ -30,6 +30,22 @@ describe('a string trimmer', function()
   end)
 end)
 
+describe('a substring occurance counter', function()
+  it('returns 0 when no occurrances of a substring exist', function()
+    assert.are.equal(0, substring_counter('abc', 'd'))
+  end)
+
+  it('returns the number of occurrances of a substring that does exist', function()
+    assert.are.equal(3, substring_counter('abababccd', 'a'))
+  end)
+end)
+
+describe('string pruning function', function()
+  it('removes everything but a substring from the reference string', function()
+    assert.are.same('aaa', prune('bhsakisaijshsaio', 'a'))
+  end)
+end)
+
 describe('a value accumulator', function()
   it('inserts a value at the end of the table', function()
     local val = {'a', 'b', 'c'}
