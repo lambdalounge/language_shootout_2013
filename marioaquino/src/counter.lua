@@ -1,11 +1,18 @@
 function count_nucleotides(input)
-  return '0 0 0 0'
+  return trim(
+              reduce(
+                      map(nucleotides(), function(nucleotide)
+                        return substring_counter(input, nucleotide)
+                      end),
+                      "",
+                      function(memo, val)
+                        return memo.." "..val
+                      end)
+              )
 end
 
-function append_from_table(data, func, collector)
-  for i,val in ipairs(data) do
-    table.insert(collector, func(val))
-  end
+function nucleotides()
+  return {'A', 'C', 'G', 'T'}
 end
 
 function append_from_function(iterable, func, collector)

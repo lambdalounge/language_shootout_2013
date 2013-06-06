@@ -16,11 +16,9 @@ describe('nucleotide counter', function()
   it('does not count non-string parameters', function()
     assert.are.equal('0 0 0 0', count_nucleotides(123456789))
   end)
-end)
 
-describe('a string iterator', function()
-  it('splits a string into a table of individual characters', function()
-    assert.are.same('a', string_iterator('abc')())
+  it('counts nucleotides (A C G T) in a string', function()
+    assert.are.equal('20 12 17 21', count_nucleotides('AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'))
   end)
 end)
 
