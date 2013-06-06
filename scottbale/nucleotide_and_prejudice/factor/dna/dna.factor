@@ -6,16 +6,12 @@ CONSTANT: counts H{ { CHAR: A 0 }
                     { CHAR: G 0 }
                     { CHAR: T 0 } } 
 
-: assoc-at ( ..a assoc key quot: ( ..a value -- ..b newvalue ) -- ..b assoc )
-
-
-: foo ( string -- assoc )
-counts [ compose [ swap ] [ [ 1 + ] assoc-at ] ] reduce ;
+: count-dna ( string -- counts-assoc )
+counts [ over [ 1 + ] change-at ] reduce ;
 
 : formatted-count ( string -- string )
 drop "todo" ;
 
 : demo ( -- assoc )
-"ACGCATGAAT" foo ;
+"ACGCATGAAT" count-dna ;
 
-MAIN: demo drop
