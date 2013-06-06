@@ -1,0 +1,7 @@
+{
+  "name": "Some Clojure Stuff",
+  "description": "demo",
+  "sections": [
+    {"section":"one"}
+  ]
+}
