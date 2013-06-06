@@ -5,6 +5,17 @@
 var _ = require("underscore");
 // Define the Base datatype and the Count type alias.
 // (Malformed represents a bad input where the base could not be read.)
+var Some = function(value_0) {
+    if(!(this instanceof Some)) {
+        return new Some(value_0);
+    }
+    this._0 = value_0;
+};
+var None = function() {
+    if(!(this instanceof None)) {
+        return new None();
+    }
+};
 var A = function() {
     if(!(this instanceof A)) {
         return new A();
@@ -25,11 +36,6 @@ var T = function() {
         return new T();
     }
 };
-var Malformed = function() {
-    if(!(this instanceof Malformed)) {
-        return new Malformed();
-    }
-};
 var emptyCount = {
     A: 0,
     C: 0,
@@ -37,8 +43,13 @@ var emptyCount = {
     T: 0
 };
 // Convert a Base to a Count
-var toCount = function(base) {
+var toCount = function(maybeBase) {
     return (function(_m) {
+        if(_m instanceof None) {
+            return emptyCount;
+        } else if(_m instanceof Some) {
+            var base = _m._0;
+            return (function(_m) {
         if(_m instanceof A) {
             return {
         A: 1,
@@ -67,10 +78,10 @@ var toCount = function(base) {
         G: 0,
         T: 1
     };
-        } else if(_m instanceof Malformed) {
-            return emptyCount;
         }
     })(base);
+        }
+    })(maybeBase);
 };
 // Add the contents of two Counts to produce a new Count
 var addCounts = function(one, two) {
@@ -86,21 +97,21 @@ var addCounts = function(one, two) {
 var toBase = function(char) {
     return (function() {
         if(char == "A") {
-            return A();
+            return Some(A());
         } else {
             return (function() {
                 if(char == "C") {
-                    return C();
+                    return Some(C());
                 } else {
                     return (function() {
                         if(char == "G") {
-                            return G();
+                            return Some(G());
                         } else {
                             return (function() {
                                 if(char == "T") {
-                                    return T();
+                                    return Some(T());
                                 } else {
-                                    return Malformed();
+                                    return None();
                                 }
                             })();
                         }

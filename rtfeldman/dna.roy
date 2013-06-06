@@ -8,17 +8,19 @@ let _ = require "underscore"
 
 // Define the Base datatype and the Count type alias.
 // (Malformed represents a bad input where the base could not be read.)
-data Base       = A | C | G | T | Malformed
-type Count      = {A: Number, C: Number, G: Number, T: Number}
-let  emptyCount = {A: 0, C: 0, G: 0, T: 0}
+data Option value = Some value | None
+data Base         = A | C | G | T
+type Count        = {A: Number, C: Number, G: Number, T: Number}
+let  emptyCount   = {A: 0, C: 0, G: 0, T: 0}
 
 // Convert a Base to a Count
-let toCount base = match base
-    case A         = {A: 1, C: 0, G: 0, T: 0}
-    case C         = {A: 0, C: 1, G: 0, T: 0}
-    case G         = {A: 0, C: 0, G: 1, T: 0}
-    case T         = {A: 0, C: 0, G: 0, T: 1}
-    case Malformed = emptyCount
+let toCount maybeBase = match maybeBase
+    case None        = emptyCount
+    case (Some base) = match base
+        case A = {A: 1, C: 0, G: 0, T: 0}
+        case C = {A: 0, C: 1, G: 0, T: 0}
+        case G = {A: 0, C: 0, G: 1, T: 0}
+        case T = {A: 0, C: 0, G: 0, T: 1}
 
 // Add the contents of two Counts to produce a new Count
 let addCounts one two =
@@ -28,18 +30,18 @@ let addCounts one two =
 // (using the most elegant approach ever beheld)
 let toBase char =
     if char == "A" then
-        A ()
+        Some (A ())
     else 
         if char == "C" then
-            C ()
+            Some (C ())
         else
             if char == "G" then
-                G ()
+                Some (G ())
             else
                 if char == "T" then
-                    T ()
+                    Some (T ())
                 else
-                    Malformed ()
+                    None ()
 
 // Use higher-order functions for the rest
 let charToCount      = _.compose toCount toBase
