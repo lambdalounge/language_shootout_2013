@@ -15,7 +15,7 @@ function append_from_function(iterable, func, collector)
 end
 
 function string_iterator(str)
-  return string.gmatch(str, "%a")
+  return str:gmatch "%a"
 end
 
 function trim(str)
