@@ -2,7 +2,8 @@
   "name": "Language Shootout",
   "description": "Language Shootout Lambda Lounge June 2013 http://lambdalounge.org/",
   "sections": [
-    {"section":"intro"}, 
+    {"section":"intro"},
+    {"section":"marioaquino"},
     {"section":"scottbale"},
     {"section":"matt-wittmann"},
     {"section":"weiqigao"},
