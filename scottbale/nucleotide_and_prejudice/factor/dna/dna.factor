@@ -1,4 +1,4 @@
-USING: io kernel hashtables assoc;
+USING: io kernel hashtables assocs math sequences ;
 IN: dna
 
 CONSTANT: counts H{ { CHAR: A 0 } 
@@ -6,13 +6,16 @@ CONSTANT: counts H{ { CHAR: A 0 }
                     { CHAR: G 0 }
                     { CHAR: T 0 } } 
 
-: foo ( char assoc -- assoc )
-"ABCAB" H{ { CHAR: A 0} } [ swap [ 1 + ] change-at ] reduce
+: assoc-at ( ..a assoc key quot: ( ..a value -- ..b newvalue ) -- ..b assoc )
+
+
+: foo ( string -- assoc )
+counts [ compose [ swap ] [ [ 1 + ] assoc-at ] ] reduce ;
 
 : formatted-count ( string -- string )
 drop "todo" ;
 
-: demo ( -- )
-"ACGCATGAAT" formatted-count print ;
+: demo ( -- assoc )
+"ACGCATGAAT" foo ;
 
-MAIN: CHAR: A foo print ;
+MAIN: demo drop
