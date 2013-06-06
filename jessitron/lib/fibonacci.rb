@@ -10,9 +10,18 @@ fib_function = ->(prev_number, prev_prev_number, k = 1) do
   # action.
   -> (piece,msg) do
     current_val = prev_number + ( prev_prev_number * k )
-    piece.pass_on(current_val, fib_function.call(current_val, prev_number, k))
+    piece.pass_on(current_val, fib_function.call(current_val, prev_number, k), "..#{prev_number}, #{current_val}..")
   end
 end
+
+#
+# To play with a duct in irb, initialize this:
+# f = Duct.new.custom(fib_function.call(1, 0, 1))).last
+#
+# f = f.drip(:whatever)
+#
+# repeat that for a while.
+# Whatever you send to it, it'll track fibonacci numbers.
 
 fib = ->(n, k=1) do
   if n == 1 then

@@ -1,5 +1,20 @@
 require 'aqueductron'
 
+#
+# The simple implementation is a duct that splits up these nucleotides
+#
+# cn = Duct.new.split( {
+#                  :A => Duct.new.keeping(->(actg) { actg == "A"}).count,
+#                  :T => Duct.new.keeping(->(actg) { actg == "T"}).count,
+#                  :C => Duct.new.keeping(->(actg) { actg == "C"}).count,
+#                  :G => Duct.new.keeping(->(actg) { actg == "A"}).count })
+#
+# The more interesting implementation (detailed further below) counts
+# whatever the heck it gets.
+#
+# countChars = Duct.new.partition(->(a) {a}, ->(a) { Duct.new.count })
+#
+
 
 class CountNucleotides
   def initialize

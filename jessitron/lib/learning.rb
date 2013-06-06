@@ -8,8 +8,17 @@ require 'aqueductron'
 module Fibonacci
   def rabbits(input, n)
     #start with an empty_fib_function, but that will change
-    duct = Aqueductron::Duct.new.custom(empty_fib_function).take(n).last
-    duct.flow(look_at_this(input)).value
+    duct = rabbit_predictor
+    duct.flow(look_at_this(input).take(n)).value
+  end
+
+  def rabbit_predictor
+    Aqueductron::Duct.new.custom(empty_fib_function).last
+    #
+    # for fun in irb:
+    # Duct.new.custom(empty_fib_function).split( {
+    #         :last => Duct.new.last,
+    #         :all  => Duct.new.array })
   end
 
   # generate an infinite stream of input
@@ -21,22 +30,23 @@ module Fibonacci
   # start here: we know nothing
   def empty_fib_function
     ->(piece,msg) do
-      piece.pass_on(msg, one_data_fib_function(msg))
+      piece.pass_on(msg, one_data_fib_function(msg),"#{msg}..")
     end
   end
 
   # then we know exactly one thing
   def one_data_fib_function(first)
     ->(piece,msg) do
-      piece.pass_on(msg, two_data_fib_function(first, msg))
+      piece.pass_on(msg, two_data_fib_function(first, msg),"#{first},#{msg}..")
     end
   end
 
   # then we know exactly two things
   def two_data_fib_function(first,second)
     ->(piece,msg) do
-      k = (msg - second) / first # initial guess at k
-      piece.pass_on(msg, learning_fib_function(msg, second, k, 1))
+      k = (msg - second + 0.0) / first # initial guess at k
+      piece.pass_on(msg, learning_fib_function(msg, second, k, 1),
+                    "..#{second},#{msg}.. starting k~#{k}")
     end
   end
 
@@ -49,7 +59,8 @@ module Fibonacci
       else
         this_k = estimate_k(prev_prev_number, prev_number, msg)
         average_k = add_data_point(k, data_points_in_k, this_k)
-        piece.pass_on(msg, learning_fib_function(msg, prev_number, average_k, data_points_in_k + 1))
+        piece.pass_on(msg, learning_fib_function(msg, prev_number, average_k, data_points_in_k + 1),
+                    "..#{prev_number},#{msg}.. learning k~#{k}")
       end
     end
   end
@@ -58,8 +69,9 @@ module Fibonacci
   # returning a new version of itself
   def fib_function(prev_number, prev_prev_number, k)
     ->(piece, _) do # msg is ignored
-      current_val = prev_number + ( prev_prev_number * k )
-      piece.pass_on(current_val, fib_function(current_val, prev_number, k))
+      current_val = (prev_number + ( prev_prev_number * k )).round
+      piece.pass_on(current_val, fib_function(current_val, prev_number, k),
+                   "..#{prev_number},#{current_val}.. k=#{k}")
     end
   end
 
