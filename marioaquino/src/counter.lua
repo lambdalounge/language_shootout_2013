@@ -1,8 +1,8 @@
-function count_nucleotides(input)
+function countNucleotides(input)
   return trim(
               reduce(
                       map(nucleotides(), function(nucleotide)
-                        return substring_counter(input, nucleotide)
+                        return substringCounter(input, nucleotide)
                       end),
                       "",
                       function(memo, val)
@@ -15,7 +15,7 @@ function nucleotides()
   return {'A', 'C', 'G', 'T'}
 end
 
-function append_from_table(data, func, collector)
+function appendFromTable(data, func, collector)
   for i,val in ipairs(data) do
     table.insert(collector, func(val))
   end
@@ -29,7 +29,7 @@ function length(input)
   return #input
 end
 
-function substring_counter(str, substring)
+function substringCounter(str, substring)
   return length(prune(str, substring))
 end
 
@@ -40,7 +40,7 @@ end
 
 function map(data, func)
   local collector = {}
-  append_from_table(data, func, collector)
+  appendFromTable(data, func, collector)
   return collector
 end
 

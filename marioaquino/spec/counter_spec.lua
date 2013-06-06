@@ -2,23 +2,23 @@ require 'counter'
 
 describe('nucleotide counter', function()
   it('returns a string with zeros if an empty string is passed', function()
-    assert.are.equal('0 0 0 0', count_nucleotides(''))
+    assert.are.equal('0 0 0 0', countNucleotides(''))
   end)
 
   it('does not count non-nucleotide characters in the string', function()
-    assert.are.equal('0 0 0 0', count_nucleotides('POLIUKJMNHYBVFREDXSWQZ'))
+    assert.are.equal('0 0 0 0', countNucleotides('POLIUKJMNHYBVFREDXSWQZ'))
   end)
 
   it('ignores whitespace', function()
-    assert.are.equal('0 0 0 0', count_nucleotides('       '))
+    assert.are.equal('0 0 0 0', countNucleotides('       '))
   end)
 
   it('does not count non-string parameters', function()
-    assert.are.equal('0 0 0 0', count_nucleotides(123456789))
+    assert.are.equal('0 0 0 0', countNucleotides(123456789))
   end)
 
   it('counts nucleotides (A C G T) in a string', function()
-    assert.are.equal('20 12 17 21', count_nucleotides('AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'))
+    assert.are.equal('20 12 17 21', countNucleotides('AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'))
   end)
 end)
 
@@ -30,11 +30,11 @@ end)
 
 describe('a substring occurance counter', function()
   it('returns 0 when no occurrances of a substring exist', function()
-    assert.are.equal(0, substring_counter('abc', 'd'))
+    assert.are.equal(0, substringCounter('abc', 'd'))
   end)
 
   it('returns the number of occurrances of a substring that does exist', function()
-    assert.are.equal(3, substring_counter('abababccd', 'a'))
+    assert.are.equal(3, substringCounter('abababccd', 'a'))
   end)
 end)
 
@@ -48,7 +48,7 @@ describe('a value accumulator', function()
   it('inserts a value at the end of the table', function()
     local val = {'a', 'b', 'c'}
     local collector = {}
-    append_from_table(val, function(val) return val end, collector)
+    appendFromTable(val, function(val) return val end, collector)
     assert.are.same({'a', 'b', 'c'}, collector)
   end)
 end)
