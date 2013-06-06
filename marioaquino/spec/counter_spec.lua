@@ -78,8 +78,3 @@ describe('a length function', function()
   end)
 end)
 
-describe('using a string iterator in a map', function()
-  it('collects all tokens from the string in a table', function()
-    assert.are.same({'a', 'b', 'c'}, map(string_iterator('abc'), function(val) return val end))
-  end)
-end)

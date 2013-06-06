@@ -15,14 +15,10 @@ function nucleotides()
   return {'A', 'C', 'G', 'T'}
 end
 
-function append_from_function(iterable, func, collector)
-  for val in iterable do
+function append_from_table(data, func, collector)
+  for i,val in ipairs(data) do
     table.insert(collector, func(val))
   end
-end
-
-function string_iterator(str)
-  return str:gmatch "%a"
 end
 
 function trim(str)
@@ -44,11 +40,7 @@ end
 
 function map(data, func)
   local collector = {}
-  if type(data) == 'table' then
-    append_from_table(data, func, collector)
-  elseif type(data) == 'function' then
-    append_from_function(data, func, collector)
-  end
+  append_from_table(data, func, collector)
   return collector
 end
 
