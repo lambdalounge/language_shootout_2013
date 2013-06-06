@@ -1,0 +1,52 @@
+// Unnecessarily elaborate nucleotide counting in Roy
+// by @rtfeldman
+
+
+// Import underscore.js from Node.js
+// since Roy doesn't have a standard library yet
+let _ = require "underscore"
+
+// Define the Base datatype and the Count type alias.
+// (Malformed represents a bad input where the base could not be read.)
+data Base       = A | C | G | T | Malformed
+type Count      = {A: Number, C: Number, G: Number, T: Number}
+let  emptyCount = {A: 0, C: 0, G: 0, T: 0}
+
+// Convert a Base to a Count
+let toCount base = match base
+    case A         = {A: 1, C: 0, G: 0, T: 0}
+    case C         = {A: 0, C: 1, G: 0, T: 0}
+    case G         = {A: 0, C: 0, G: 1, T: 0}
+    case T         = {A: 0, C: 0, G: 0, T: 1}
+    case Malformed = emptyCount
+
+// Add the contents of two Counts to produce a new Count
+let addCounts one two =
+    {A: one.A + two.A, C: one.C + two.C, G: one.G + two.G, T: one.T + two.T}
+
+// Convert a String character to a Base
+// (using the most elegant approach ever beheld)
+let toBase char =
+    if char == "A" then
+        A ()
+    else 
+        if char == "C" then
+            C ()
+        else
+            if char == "G" then
+                G ()
+            else
+                if char == "T" then
+                    T ()
+                else
+                    Malformed ()
+
+// Use higher-order functions for the rest
+let charToCount      = _.compose toCount toBase
+let sumCounts counts = _.reduce counts addCounts emptyCount
+let strToCounts str  = sumCounts (_.map str charToCount)
+
+// Actually run the count
+let inputStr = process.argv @ 2
+
+console.log (strToCounts inputStr)

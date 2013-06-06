@@ -1,0 +1,27 @@
+Class,Input,Expected
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 0 0,0.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 0 100,0.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,100 0 0,1.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 100 0,0.75
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 0 50,745.0/990.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,0 50 50,4337.5/9900.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,50 50 0,9287.5/9900.0
+com.mattwittmann.lambdalounge.languageshootout2013.DefaultMendelsFirstLaw$,2 2 2,47.0/60.0
+com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterImmutableMapFold$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21
+com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterMutableMapForEach$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21
+com.mattwittmann.lambdalounge.languageshootout2013.DnaNucleotideCounterImperative$,AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC,20 12 17 21
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,5 3,19
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,3 2,3
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,0 1,0
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,1 1,1
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,2 1,1
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,3 1,2
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,4 1,3
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,5 1,5
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,6 1,8
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,7 1,13
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,8 1,21
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,9 1,34
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,10 1,55
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,11 1,89
+com.mattwittmann.lambdalounge.languageshootout2013.ForwardRabbitRecurrence$,12 1,144
