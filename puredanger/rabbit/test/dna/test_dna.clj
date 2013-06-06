@@ -1,6 +1,7 @@
 (ns dna.test-dna
   (:require [clojure.test :refer :all]
-            [dna.dna :refer :all]))
+            [dna.dna :refer :all]
+            [criterium.core :as crit]))
 
 (deftest perf
   (println "Constructing big input data")
@@ -9,11 +10,9 @@
         v (vec s)]
 
     (println "testing sequential version")
-    (dotimes [n 5]
-      (System/gc)
-      (time (dna-count v)))
-    
-    (println "\ntesting reducer version")
-    (dotimes [n 5]
-      (System/gc)
-      (time (dna-count-par v)))))
+    (crit/bench (dna-count v))
+
+    (dotimes [g 3]
+      (binding [*GRANULARITY* (* 8192 (apply * (repeat g 2)))]
+        (println "\ntesting reducer version, granularity= " *GRANULARITY*)
+        (crit/bench (dna-count-par v))))))

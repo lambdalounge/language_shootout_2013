@@ -17,12 +17,14 @@
         totals (r/fold combinef reducef v)]
     (vals (into (sorted-map) totals))))
 
+(def ^:dynamic *GRANULARITY* 16384)
+
 (defn dna-count-par2 [s]
   (let [seed {\C 0 \G 0 \T 0 \A 0}
         combinef (fn [& x] (if x (apply merge-with + x) seed))
         reducef (fn [counts x]
                   (persistent!
                    (assoc! (transient counts) x (inc (get counts x)))))
-        totals (r/fold 65536 combinef reducef s)]
+        totals (r/fold *GRANULARITY* combinef reducef s)]
     (vals (into (sorted-map) totals))))
 
