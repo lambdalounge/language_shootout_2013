@@ -1,0 +1,4 @@
+true: syntax(camlp4o)
+true: package(core,sexplib.syntax)
+true: thread,debug
+<*_tests.*>: package(oUnit)
